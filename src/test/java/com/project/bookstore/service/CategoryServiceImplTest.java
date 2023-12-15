@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,18 +17,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.project.bookstore.dto.CategoryCreateRequestDto;
 import com.project.bookstore.dto.CategoryUpdateRequestDto;
+import com.project.bookstore.dto.CategoryCreateRequestDto;
 import com.project.bookstore.entities.Category;
 import com.project.bookstore.exception.CategoryNotFoundException;
 import com.project.bookstore.repository.CategoryRepository;
 
-
-
 @ExtendWith(MockitoExtension.class)
-public class CategorServiceImplTest {
+public class CategoryServiceImplTest {
 	
-
 	private CategoryRepository categoryRepository;
 	
 	private CategoryServiceImpl categoryService;
@@ -43,13 +40,12 @@ public class CategorServiceImplTest {
 		categoryService = new CategoryServiceImpl(categoryRepository);
 	}
 	
-	
 	@Test
 	public void testGetAllCategories_itShouldReturnCategoryList() {
 		
-		Category user1 = new Category(1L,"Korku");
+		Category category = new Category(1L,"Korku");
 		
-		List<Category> categoryList = Collections.singletonList(user1);
+		List<Category> categoryList = Collections.singletonList(category);
 		
 		when(categoryRepository.findAll()).thenReturn(categoryList);
 		
@@ -71,7 +67,7 @@ public class CategorServiceImplTest {
 	}
 	
 	@Test
-	public void testGetCategoryById_whenUserDoesNotIdExist_itShouldThrowCategoryNotFondExceptionr() {
+	public void testGetCategoryById_whenCategoryDoesNotIdExist_itShouldThrowCategoryNotFondExceptionr() {
 		
 		Long categoryId = 1L;
 
@@ -92,7 +88,7 @@ public class CategorServiceImplTest {
 	}
 	
 	@Test
-	public void testDeleteCategoryById_whenUserDoesNotIdExist_itShouldThrowCategoryNotFondExceptionr() {
+	public void testDeleteCategoryById_whenCategoryDoesNotIdExist_itShouldThrowCategoryNotFondExceptionr() {
 		
 		Long categoryId = 1L;
 
@@ -131,6 +127,8 @@ public class CategorServiceImplTest {
 	
 	}
 	
+
+
 	@Test
 	public void testCreateCategory_itShouldReturnCreadetCategoryRequestDto() {
 		
@@ -145,5 +143,7 @@ public class CategorServiceImplTest {
 		
 		assertEquals(saveCategory.getId(),1L);
 	}
-
+	
+	
+	
 }

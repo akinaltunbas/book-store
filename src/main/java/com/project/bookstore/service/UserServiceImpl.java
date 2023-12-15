@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void deleteOneUserById(Long userId) {
+		userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 		userRepository.deleteById(userId);
 		
 	}
@@ -43,13 +44,13 @@ public class UserServiceImpl implements UserService{
 	public User updateOneUserById(Long userId, UserUpdateRequestDto updateUserRequest) {
 		Optional<User> user = userRepository.findById(userId);
 		if(user.isPresent()) {
-			User user1 = user.get();
-			updateUserRequest.mapUserUpdateRequestDto(user1);
-			userRepository.save(user1);
+			User updateUser = user.get();
+			updateUserRequest.mapUserUpdateRequestDto(updateUser);
+			return userRepository.save(updateUser);
 			
-			return user1;
+		}else {
+			throw new UserNotFoundException(userId);
 		}
-		return null;
 	}
 	
 	@Override
@@ -71,13 +72,15 @@ public class UserServiceImpl implements UserService{
 	public User updateProfile(Long userId, UserUpdateProfileRequestDto updateProfile) {
 		Optional<User> user = userRepository.findById(userId);
 		if(user.isPresent()) {
-			User user1 = user.get();
-			updateProfile.mapUserUpdateProfileRequestDto(user1);
-			userRepository.save(user1);
+			User updateUser = user.get();
+			updateProfile.mapUserUpdateProfileRequestDto(updateUser);
+			userRepository.save(updateUser);
 			
-			return user1;
+			return userRepository.save(updateUser);
+			
+		}else {
+			throw new UserNotFoundException(userId);
 		}
-		return null;
 	}
 
 		

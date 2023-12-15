@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.project.bookstore.exception.BookAlreadyExistsException;
+import com.project.bookstore.exception.BookNameNotFoundException;
 import com.project.bookstore.exception.BookNotFoundException;
 import com.project.bookstore.exception.CategoryAlreadyExistsException;
 import com.project.bookstore.exception.CategoryNotFoundException;
@@ -42,6 +43,12 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(BookNotFoundException.class) 
 	public final ResponseEntity<String> bookNotFoundException(BookNotFoundException e) {
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+		
+	}
+	
+	@ExceptionHandler(BookNameNotFoundException.class) 
+	public final ResponseEntity<String> bookNameNotFoundException(BookNameNotFoundException e) {
 		return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		
 	}
